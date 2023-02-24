@@ -15,7 +15,7 @@ const Home = () => {
   const [searchText, setSearchText] = useState("");
 
   return (
-    <section className="max-w-7xl mx-auto">
+    <section className="max-w-7xl mx-auto text-left">
       <div>
         <h1 className="font-extrabold text-[#222328] text-[32px]">
           The Community SHowcase
