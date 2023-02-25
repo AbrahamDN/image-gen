@@ -1,3 +1,8 @@
+export const url =
+  process.env.NODE_ENV === "production"
+    ? "https://image-gen-nci1.onrender.com"
+    : "http://localhost:8080";
+
 export const surpriseMePrompts = [
   "an armchair in the shape of an avocado",
   "a surrealist dream-like oil painting by Salvador Dalí of a cat playing checkers",
