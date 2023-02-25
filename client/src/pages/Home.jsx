@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FormField, Loader } from "../components";
+import { useEffect, useState } from "react";
+import { Card, FormField, Loader } from "../components";
 
 const RenderCards = ({ data, title }) => {
   if (data?.length > 0)
@@ -14,11 +14,37 @@ const Home = () => {
   const [allPosts, setAllPosts] = useState(null);
   const [searchText, setSearchText] = useState("");
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/post", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.info(result);
+          setAllPosts(result.data?.reverse());
+        }
+      } catch (error) {
+        alert(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, []);
+
   return (
     <section className="max-w-7xl mx-auto text-left">
       <div>
         <h1 className="font-extrabold text-[#222328] text-[32px]">
-          The Community SHowcase
+          The Community Showcase
         </h1>
 
         <p className="mt-2 text-[666e75] text-[14px] max-w-[500px]">
@@ -48,7 +74,7 @@ const Home = () => {
               {searchText ? (
                 <RenderCards data={[]} title="No search results found" />
               ) : (
-                <RenderCards data={[]} title="No post found" />
+                <RenderCards data={allPosts} title="No post found" />
               )}
             </div>
           </>
