@@ -18,6 +18,7 @@ const Home = () => {
   const [searchTimeout, setSearchTimeout] = useState(null);
 
   const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
     setSearchText(e.target.value);
 
     setSearchTimeout(
@@ -46,7 +47,6 @@ const Home = () => {
 
         if (response.ok) {
           const result = await response.json();
-          console.info(result);
           setAllPosts(result.data?.reverse());
         }
       } catch (error) {
